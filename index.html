@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maskuari Portofolio</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        /* ========================================
+           ULTRA REFINED DESIGN SYSTEM
+           ========================================
+        */
+        :root {
+            --primary: #0f172a;
+            --accent: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.4);
+            --bg-body: #f8fafc;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.85);
+            --border: #e2e8f0;
+            --text-main: #1e293b;
+            --text-mute: #64748b;
+            --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+            --shadow-hard: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            overflow-x: hidden;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* --- BACKGROUND UNIVERSE (EXTRA DETAILED) --- */
+        .universe-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f1f5f9 100%);
+        }
+
+        .universe-bg::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
+            opacity: 0.03;
+        }
+
+        .floating-icon {
+            position: absolute;
+            color: var(--accent);
+            opacity: 0.12;
+            filter: blur(0.4px);
+            will-change: transform;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes floatAnim {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) rotate(10deg) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) rotate(-10deg) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 1200px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 12px 30px;
+            border-radius: 100px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border: 1px solid var(--white);
+            box-shadow: var(--shadow-hard);
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            top: 15px;
+            width: 95%;
+            padding: 8px 25px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.8rem;
+            color: var(--primary);
+            cursor: pointer;
+            letter-spacing: -1.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text-mute);
+            font-size: 0.9rem;
+            font-weight: 700;
+            border-radius: 50px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            border: 1px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+            background: rgba(59, 130, 246, 0.08);
+            border-color: rgba(59, 130, 246, 0.1);
+        }
+
+        .nav-links a.active {
+            background: var(--white);
+            color: var(--accent);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
+            border-color: var(--border);
+        }
+
+        /* --- MAIN LAYOUT --- */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 200px 20px 100px;
+            position: relative;
+        }
+
+        .page {
+            display: none;
+            opacity: 0;
+            transform: translateY(40px) scale(0.98);
+        }
+
+        .page.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* --- SECTION HEADERS --- */
+        .section-header {
+            margin-bottom: 80px;
+            text-align: left;
+            position: relative;
+        }
+
+        .section-header h2 {
+            font-size: 5rem;
+            font-weight: 900;
+            color: var(--primary);
+            letter-spacing: -4px;
+            line-height: 0.85;
+            text-transform: uppercase;
+        }
+
+        .section-header .sub-line {
+            width: 120px;
+            height: 10px;
+            background: linear-gradient(90deg, var(--accent), transparent);
+            margin-top: 30px;
+            border-radius: 10px;
+        }
+
+        /* --- CARDS & BLOCKS --- */
+        .content-card {
+            background: var(--white);
+            padding: 60px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-hard);
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: var(--accent);
+            opacity: 0.8;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            display: flex;
+            gap: 100px;
+            align-items: center;
+            min-height: 70vh;
+        }
+
+        .hero-text {
+            flex: 1.4;
+        }
+
+        .hero-text h4 {
+            color: var(--accent);
+            font-weight: 800;
+            letter-spacing: 5px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            font-size: 1rem;
+        }
+
+        .hero-text h1 {
+            font-size: 6rem;
+            line-height: 0.95;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 40px;
+            letter-spacing: -3px;
+        }
+
+        .hero-text p {
+            font-size: 1.3rem;
+            color: var(--text-mute);
+            line-height: 1.8;
+            margin-bottom: 50px;
+            max-width: 650px;
+        }
+
+        .hero-img-box {
+            flex: 0.8;
+            position: relative;
+            perspective: 1000px;
+        }
+
+        .hero-img-box img {
+            width: 100%;
+            border-radius: 60px;
+            height: 600px;
+            object-fit: cover;
+            transform: rotateY(-10deg) rotateX(5deg);
+            box-shadow:
+                -20px 20px 50px rgba(0, 0, 0, 0.1),
+                40px 40px 0px var(--white),
+                41px 41px 0px var(--border);
+            transition: var(--transition);
+        }
+
+        .hero-img-box:hover img {
+            transform: rotateY(0deg) rotateX(0deg);
+        }
+
+        /* --- BIODATA GRID --- */
+        .bio-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+        }
+
+        .bio-info-card {
+            background: #f8fafc;
+            padding: 45px;
+            border-radius: 40px;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .bio-info-card:hover {
+            background: var(--white);
+            border-color: var(--accent);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .bio-item {
+            margin-bottom: 30px;
+        }
+
+        .bio-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .bio-label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--accent);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .bio-value {
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        /* --- TIMELINE (PENDIDIKAN & PENGALAMAN) --- */
+        .timeline-container {
+            position: relative;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 60px;
+            margin-bottom: 60px;
+            border-left: 4px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .timeline-item:hover {
+            border-left-color: var(--accent);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -14px;
+            top: 0;
+            width: 24px;
+            height: 24px;
+            background: var(--white);
+            border: 5px solid var(--accent);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .timeline-item:hover::before {
+            background: var(--accent);
+            transform: scale(1.3);
+        }
+
+        .timeline-item h3 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item .date {
+            color: var(--accent);
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 5px 15px;
+            border-radius: 10px;
+        }
+
+        .timeline-item p {
+            color: var(--text-mute);
+            font-size: 1.15rem;
+            line-height: 1.8;
+        }
+
+        /* --- SKILLS --- */
+        .skill-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 30px;
+        }
+
+        .skill-card {
+            background: #f8fafc;
+            padding: 35px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .skill-card:hover {
+            background: var(--white);
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-soft);
+            border-color: var(--accent);
+        }
+
+        .skill-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-weight: 800;
+            font-size: 1.1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 16px;
+            background: #e2e8f0;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #60a5fa);
+            width: 0;
+            transition: 2s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        /* --- PRESTASI --- */
+        .award-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 25px;
+        }
+
+        .award-card {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            padding: 40px;
+            background: var(--white);
+            border-radius: 40px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .award-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #fbbf24;
+            box-shadow: 0 30px 60px -20px rgba(251, 191, 36, 0.2);
+        }
+
+        .award-icon {
+            width: 80px;
+            height: 80px;
+            background: #fffbeb;
+            color: #fbbf24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+            flex-shrink: 0;
+        }
+
+        .award-icon i {
+            width: 40px;
+            height: 40px;
+        }
+
+        .award-card h3 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .award-card .date {
+            font-weight: 700;
+            color: var(--text-mute);
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 50px;
+            color: var(--text-mute);
+            font-weight: 600;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .hero {
+                flex-direction: column-reverse;
+                text-align: center;
+                gap: 50px;
+            }
+
+            .hero-text h1 {
+                font-size: 4.5rem;
+            }
+
+            .hero-text p {
+                margin: 0 auto 40px;
+            }
+
+            .hero-img-box img {
+                height: 450px;
+                width: 450px;
+                border-radius: 40px;
+                transform: none !important;
+            }
+
+            .section-header h2 {
+                font-size: 3.5rem;
+            }
+        }
+
+        /* ========================================
+   MOBILE RESPONSIVE FIX (CLEAN VERSION)
+   ======================================== */
+
+        @media (max-width:768px) {
+
+            /* ===============================
+NAVBAR MOBILE
+=============================== */
+
+            nav {
+                top: auto;
+                bottom: 18px;
+                width: 94%;
+                padding: 8px;
+                border-radius: 28px;
+            }
+
+            nav.scrolled {
+                top: auto;
+                bottom: 20px;
+            }
+
+            .logo {
+                display: none;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .nav-links a {
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+
+            .nav-links a span {
+                display: none;
+            }
+
+
+            /* ===============================
+MAIN SPACING
+=============================== */
+
+            main {
+                padding: 30px 18px calc(160px + env(safe-area-inset-bottom));
+            }
+
+            .content-card {
+                padding: 22px;
+                border-radius: 26px;
+            }
+
+
+            /* ===============================
+SECTION HEADER (BIAR GA GEDE)
+=============================== */
+
+            .section-header h2 {
+                font-size: 2.1rem;
+                letter-spacing: -1px;
+                line-height: 1.15;
+            }
+
+            .sub-line {
+                width: 65px;
+                height: 5px;
+                margin-top: 16px;
+            }
+
+
+            /* ===============================
+HERO SECTION
+=============================== */
+
+            .hero-text {
+                text-align: center;
+            }
+
+            .hero-text h4 {
+                font-size: 0.8rem;
+                letter-spacing: 3px;
+            }
+
+            .hero-text p {
+                font-size: 0.95rem;
+            }
+
+            .hero-img-box img {
+                width: 220px;
+                height: 220px;
+            }
+
+
+            /* ===============================
+BIODATA GRID
+=============================== */
+
+            .bio-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+            .bio-label {
+                font-size: 0.7rem;
+            }
+
+            .bio-value {
+                font-size: 0.95rem;
+                line-height: 1.6;
+            }
+
+
+            /* ===============================
+TIMELINE (PENDIDIKAN)
+=============================== */
+
+            .timeline-item {
+                padding-left: 40px;
+            }
+
+            .timeline-item h3 {
+                font-size: 1.2rem;
+            }
+
+            .timeline-item p {
+                font-size: 0.9rem;
+            }
+
+            .date {
+                font-size: 0.75rem;
+                padding: 4px 10px;
+            }
+
+
+            /* ===============================
+SKILL SECTION
+=============================== */
+
+            .skill-info {
+                font-size: 0.9rem;
+            }
+
+            .progress-bar {
+                height: 12px;
+            }
+
+
+            /* ===============================
+AWARD GRID
+=============================== */
+
+            .award-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 2rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="universe-bg" id="bg-elements"></div>
+
+    <nav id="main-nav">
+        <div class="logo" onclick="navigateTo('home')">
+            <i data-lucide="layout" style="color:var(--accent)"></i>
+            MASKUARI<span>.</span>
+        </div>
+        <ul class="nav-links">
+            <li><a onclick="navigateTo('home')" id="nav-home" class="active"><i
+                        data-lucide="home"></i><span>Home</span></a></li>
+            <li><a onclick="navigateTo('biodata')" id="nav-biodata"><i data-lucide="user"></i><span>Bio</span></a></li>
+            <li><a onclick="navigateTo('pendidikan')" id="nav-pendidikan"><i
+                        data-lucide="graduation-cap"></i><span>Edu</span></a></li>
+            <li><a onclick="navigateTo('pengalaman')" id="nav-pengalaman"><i
+                        data-lucide="briefcase"></i><span>Exp</span></a></li>
+            <li><a onclick="navigateTo('skill')" id="nav-skill"><i data-lucide="zap"></i><span>Skill</span></a></li>
+            <li><a onclick="navigateTo('prestasi')" id="nav-prestasi"><i data-lucide="award"></i><span>Reward</span></a>
+            </li>
+            <li><a onclick="navigateTo('sosial')" id="nav-sosial"><i data-lucide="share-2"></i><span>Social</span></a>
+            </li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="home" class="page active">
+            <div class="hero">
+                <div class="hero-text">
+                    <h4>Student of Computer Education</h4>
+                    <h1>Hi, I'm <br><span style="color: var(--accent);">Maskuari</span></h1>
+                    <p>Membangun pengalaman digital yang elegan, fungsional, dan memberikan dampak nyata bagi pengguna
+                        melalui kode dan desain yang presisi. Berfokus pada perpaduan kreativitas dan teknologi.</p>
+                    <div style="display: flex; gap: 20px; justify-content: inherit;">
+                        <button onclick="navigateTo('pengalaman')"
+                            style="padding: 22px 45px; background: var(--primary); color: white; cursor: pointer; font-weight: 800; border: none; border-radius: 25px; font-size: 1.1rem; box-shadow: 0 15px 30px rgba(15, 23, 42, 0.2); transition: 0.3s;">Explore
+                            Projects</button>
+                        <button onclick="navigateTo('biodata')"
+                            style="padding: 22px 45px; background: var(--white); color: var(--primary); cursor: pointer; font-weight: 800; border: 2px solid var(--border); border-radius: 25px; font-size: 1.1rem; transition: 0.3s;">Read
+                            Bio</button>
+                    </div>
+                </div>
+                <div class="hero-img-box">
+                    <img src="/Maskuari.jpeg" alt="Maskuari Portrait">
+                </div>
+            </div>
+        </section>
+
+        <section id="biodata" class="page">
+            <div class="section-header">
+                <h2>Biodata Diri</h2>
+                <div class="sub-line"></div>
+            </div>
+            <div class="content-card">
+                <div class="bio-grid">
+                    <div class="bio-info-card">
+                        <div class="bio-item"><span class="bio-label">Nama Lengkap</span><span
+                                class="bio-value">Maskuari</span></div>
+                        <div class="bio-item"><span class="bio-label">Email Korespondensi</span><span
+                                class="bio-value">arimaskuari@gmail.com</span></div>
+                        <div class="bio-item"><span class="bio-label">Pekerjaan Utama</span><span
+                                class="bio-value">Canva Design, Front End Developer, Mahasiswa</span></div>
+                    </div>
+                    <div class="bio-info-card">
+                        <div class="bio-item"><span class="bio-label">Domisili Saat Ini</span><span
+                                class="bio-value">Banjarmasin, Kalimantan Selatan</span></div>
+                        <div class="bio-item"><span class="bio-label">Daerah Kelahiran</span><span
+                                class="bio-value">Amuntai, Hulu Sungai Utara</span></div>
+                        <div class="bio-item"><span class="bio-label">Status Kolaborasi</span><span
+                                class="bio-value">Available for Creative Projects</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pendidikan" class="page">
+            <div class="section-header">
+                <h2>Pendidikan</h2>
+                <div class="sub-line"></div>
+            </div>
+            <div class="content-card">
+                <div class="timeline-container">
+                    <div class="timeline-item" onclick="showEduDetail('ulm')">
+                        <span class="date">2024 - Sekarang</span>
+                        <h3>Universitas Lambung Mangkurat</h3>
+                        <p>Program Studi Pendidikan Komputer. Fokus pada pengembangan teknologi pendidikan, dasar-dasar
+                            algoritma, dan rekayasa perangkat lunak dalam konteks pembelajaran digital.</p>
+                    </div>
+                    <div class="timeline-item" onclick="showEduDetail('smk')">
+                        <span class="date">2021 - 2024</span>
+                        <h3>SMK Negeri 1 Amuntai</h3>
+                        <p>Jurusan Teknik Komputer dan Jaringan. Mempelajari manajemen infrastruktur jaringan, perakitan
+                            perangkat keras, instalasi sistem operasi, dan administrasi server.</p>
+                    </div>
+                    <div class="timeline-item" onclick="showEduDetail('smp')">
+                        <span class="date">2018 - 2021</span>
+                        <h3>SMP Negeri 9 Amuntai</h3>
+                        <p>Mulai aktif dalam berbagai organisasi kesiswaan dan mulai mengeksplorasi minat di bidang seni
+                            musik dan teknologi informasi dasar.</p>
+                    </div>
+                    <div class="timeline-item" onclick="showEduDetail('sd')">
+                        <span class="date">2012 - 2018</span>
+                        <h3>SDN Pinangkara</h3>
+                        <p>Pendidikan dasar yang menjadi fondasi awal perjalanan akademik dan pembentukan karakter
+                            disiplin.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pengalaman" class="page">
+            <div class="section-header">
+                <h2>Pengalaman</h2>
+                <div class="sub-line"></div>
+            </div>
+            <div class="content-card">
+                <div class="timeline-container">
+                    <div class="timeline-item">
+                        <span class="date">2026 - Sekarang</span>
+                        <h3>Anggota Divisi Komunikasi dan Informasi HIMPIKOM FKIP ULM</h3>
+                        <p>Bertanggung jawab dalam pengelolaan media sosial resmi organisasi, strategi publikasi konten,
+                            dan arus informasi bagi seluruh anggota HIMPIKOM periode 2026.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2026</span>
+                        <h3>Anggota PDD Bukber Bersama HIMPIKOM</h3>
+                        <p>Terlibat dalam tim Publikasi, Dekorasi, dan Dokumentasi untuk mensukseskan acara silaturahmi
+                            tahunan mahasiswa Pendidikan Komputer.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2026</span>
+                        <h3>Anggota PDD Pemira HIMPIKOM</h3>
+                        <p>Mendesain aset visual dan mendokumentasikan jalannya Pemilihan Raya Ketua Umum HIMPIKOM
+                            secara profesional.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2025</span>
+                        <h3>CO PDD Musta HIMPIKOM</h3>
+                        <p>Koordinator lapangan untuk tim Publikasi, Dekorasi, dan Dokumentasi dalam forum Musyawarah
+                            Anggota tertinggi di organisasi.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2025</span>
+                        <h3>OC Koordinator Lapangan Pilkom Festival</h3>
+                        <p>Mengatur teknis operasional di lapangan untuk memastikan kelancaran seluruh rangkaian acara
+                            Pilkom Festival yang melibatkan banyak peserta.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2025</span>
+                        <h3>Anggota Sekretariatan STEM Puebloscience</h3>
+                        <p>Menangani administrasi, pendataan peserta, dan teknis dokumentasi pada acara internasional
+                            kolaborasi FKIP ULM dengan Puebloscience.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2024 - Sekarang</span>
+                        <h3>Ketua Angkatan 2024 Prodi Pendidikan Komputer</h3>
+                        <p>Dipercaya memimpin, mengayomi, dan mengkoordinir seluruh mahasiswa angkatan 2024 dalam urusan
+                            akademik maupun kegiatan internal prodi.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2023</span>
+                        <h3>Magang di Kantor PUPR bidang SDA</h3>
+                        <p>Melaksanakan praktik kerja industri (Prakerin) di Dinas Pekerjaan Umum dan Penataan Ruang
+                            pada bidang Sumber Daya Air, mempelajari sistem administrasi dan pemetaan data.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2022 - 2023</span>
+                        <h3>Magang di Yulida Komputer</h3>
+                        <p>Mengasah keterampilan teknis dalam perbaikan PC/Laptop, instalasi software, manajemen stok
+                            komponen, serta pelayanan langsung kepada pelanggan.</p>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="date">2019 - 2020</span>
+                        <h3>Ketua OSIS SMP Negeri 9 Amuntai</h3>
+                        <p>Memimpin organisasi kesiswaan tertinggi di tingkat sekolah, merancang program kerja, dan
+                            berkoordinasi langsung dengan pihak sekolah untuk kegiatan siswa.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="skill" class="page">
+            <div class="section-header">
+                <h2>Keahlian</h2>
+                <div class="sub-line"></div>
+            </div>
+            <div class="content-card">
+                <div class="skill-container">
+                    <div class="skill-card">
+                        <div class="skill-info"><span>Canva Design</span><span>96%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="96%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>Video Editing</span><span>92%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="92%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>Photography</span><span>88%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="88%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>Mobile Editing (Pixellab, Lightroom)</span><span>90%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="90%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>HTML Development</span><span>80%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="80%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>CSS Styling</span><span>70%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="70%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>JavaScript Logic</span><span>68%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="68%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>Python Programming</span><span>70%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="70%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>Adobe Photoshop</span><span>72%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="72%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>PHP Backend</span><span>40%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="40%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>UI/UX Figma</span><span>60%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="60%"></div>
+                        </div>
+                    </div>
+                    <div class="skill-card">
+                        <div class="skill-info"><span>Java & Octave</span><span>30%</span></div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" data-percent="30%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="prestasi" class="page">
+            <div class="section-header">
+                <h2>Pencapaian</h2>
+                <div class="sub-line"></div>
+            </div>
+            <div class="award-grid">
+                <div class="award-card" onclick="showAwardDetail('choir')">
+                    <div class="award-icon"><i data-lucide="music"></i></div>
+                    <div>
+                        <h3>Juara 1 Paduan Suara</h3>
+                        <p class="date">Provinsi Kalsel 2023</p>
+                    </div>
+                </div>
+                <div class="award-card" onclick="showAwardDetail('video')">
+                    <div class="award-icon"><i data-lucide="video"></i></div>
+                    <div>
+                        <h3>Juara 2 Video Edukasi</h3>
+                        <p class="date">FKIP Land 2025</p>
+                    </div>
+                </div>
+                <div class="award-card" onclick="showAwardDetail('music')">
+                    <div class="award-icon"><i data-lucide="radio"></i></div>
+                    <div>
+                        <h3>Juara 3 Musik Daerah</h3>
+                        <p class="date">Provinsi Kalsel 2023</p>
+                    </div>
+                </div>
+                <div class="award-card" onclick="showAwardDetail('satgas')">
+                    <div class="award-icon"><i data-lucide="shield-check"></i></div>
+                    <div>
+                        <h3>Juara 3 Video Edukasi</h3>
+                        <p class="date">Satgas PPK ULM</p>
+                    </div>
+                </div>
+                <div class="award-card" onclick="showAwardDetail('silat')">
+                    <div class="award-icon"><i data-lucide="sword"></i></div>
+                    <div>
+                        <h3>Juara 3 Silat</h3>
+                        <p class="date">Kabupaten HSU 2019</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="sosial" class="page">
+            <div class="section-header">
+                <h2>Sosial Media</h2>
+                <div class="sub-line"></div>
+            </div>
+
+            <div class="content-card">
+                <div class="skill-container">
+
+                    <div class="skill-card" onclick="openSocial('instagram')">
+                        <div class="skill-info">
+                            <span><i data-lucide="instagram"></i> Instagram</span>
+                        </div>
+                        <p style="color:var(--text-mute)">Ikuti aktivitas dan karya saya di Instagram.</p>
+                    </div>
+
+                    <div class="skill-card" onclick="openSocial('github')">
+                        <div class="skill-info">
+                            <span><i data-lucide="github"></i> Github</span>
+                        </div>
+                        <p style="color:var(--text-mute)">Lihat proyek coding dan repository saya.</p>
+                    </div>
+
+                    <div class="skill-card" onclick="openSocial('linkedin')">
+                        <div class="skill-info">
+                            <span><i data-lucide="linkedin"></i> LinkedIn</span>
+                        </div>
+                        <p style="color:var(--text-mute)">Profil profesional dan pengalaman kerja saya.</p>
+                    </div>
+
+                    <div class="skill-card" onclick="openSocial('youtube')">
+                        <div class="skill-info">
+                            <span><i data-lucide="youtube"></i> YouTube</span>
+                        </div>
+                        <p style="color:var(--text-mute)">Konten video dan dokumentasi kegiatan.</p>
+                    </div>
+
+                    <div class="skill-card" onclick="openSocial('tiktok')">
+                        <div class="skill-info">
+                            <span><i data-lucide="music-4"></i> TikTok</span>
+                        </div>
+                        <p style="color:var(--text-mute)">Konten video pendek dan aktivitas kreatif.</p>
+                    </div>
+
+                    <div class="skill-card" onclick="openSocial('whatsapp')">
+                        <div class="skill-info">
+                            <span><i data-lucide="message-circle"></i> WhatsApp</span>
+                        </div>
+                        <p style="color:var(--text-mute)">Hubungi saya langsung melalui WhatsApp.</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Maskuari. All rights reserved.</p>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // --- ENHANCED BACKGROUND GENERATOR ---
+        const bgContainer = document.getElementById('bg-elements');
+        const iconList = ['bot', 'ghost', 'cpu', 'rocket', 'gamepad-2', 'code-2', 'monitor', 'zap', 'star', 'binary', 'database', 'command', 'terminal'];
+
+        function generateBackground() {
+            bgContainer.innerHTML = '';
+            for (let i = 0; i < 50; i++) { // Lebih banyak elemen (50 buah)
+                const iconWrap = document.createElement('div');
+                iconWrap.className = 'floating-icon';
+                const size = 30 + Math.random() * 100; // Ukuran bervariasi dari 30px sampai 130px
+
+                iconWrap.style.left = Math.random() * 100 + '%';
+                iconWrap.style.top = Math.random() * 100 + '%';
+                iconWrap.style.animation = `floatAnim ${10 + Math.random() * 20}s infinite ease-in-out`;
+                iconWrap.style.animationDelay = `${Math.random() * 10}s`;
+
+                const iconName = iconList[Math.floor(Math.random() * iconList.length)];
+                iconWrap.innerHTML = `<i data-lucide="${iconName}" style="width:${size}px; height:${size}px"></i>`;
+                bgContainer.appendChild(iconWrap);
+            }
+            lucide.createIcons();
+        }
+        generateBackground();
+
+        // --- NAVIGATION ENGINE ---
+        function navigateTo(pageId) {
+            const current = document.querySelector('.page.active');
+            const target = document.getElementById(pageId);
+            const navLinks = document.querySelectorAll('.nav-links a');
+
+            if (!target || current.id === pageId) return;
+
+            // Transisi keluar
+            gsap.to(current, {
+                opacity: 0,
+                y: -30,
+                duration: 0.4,
+                ease: "power2.in",
+                onComplete: () => {
+                    current.classList.remove('active');
+                    target.classList.add('active');
+
+                    // Transisi masuk
+                    gsap.fromTo(target,
+                        { opacity: 0, y: 30, scale: 0.95 },
+                        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power2.out" }
+                    );
+
+                    // Skill bar animation trigger
+                    if (pageId === 'skill') {
+                        setTimeout(() => {
+                            document.querySelectorAll('.progress-fill').forEach(bar => {
+                                bar.style.width = bar.getAttribute('data-percent');
+                            });
+                        }, 200);
+                    }
+                }
+            });
+
+            // Update UI Nav
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.id === `nav-${pageId}`) link.classList.add('active');
+            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // --- MODAL POPUPS (DETAIL) ---
+        function showEduDetail(key) {
+            const details = {
+                ulm: { t: 'ULM Banjarmasin', d: 'Masuk pada 2024, lulus pada jalur SNBT, Disini saya belajar banyak pemrograman, dari Pyhton, java, PHP, dan Web, dan karenabasisnya pendidikan, jadi saya juga belajar tentang pendidikan, kognitif, dll (menjadi guru).' },
+                smk: { t: 'SMKN 1 Amuntai', d: 'Jurusan Teknik Komputer dan Jaringan. Saya Mempelajari manajemen infrastruktur jaringan, perakitan perangkat keras, instalasi sistem operasi, dan administrasi server. Syukurnya, pada SMK ini saya bisa meraih juara 1 dikelas setiap semester' },
+                smp: { t: 'SMPN 9 Amuntai', d: 'Mulai aktif dalam berbagai organisasi kesiswaan dan mulai mengeksplorasi minat di bidang seni musik dan teknologi informasi dasar. selama bersekolah, saya berhasil mempertahankan akademik dengan menjadi juara 1 kelas berturut-turut, dan jadi lulusan terbaik pada angkatannya' },
+                sd: { t: 'SDN Pinangkara', d: 'Pendidikan dasar yang menjadi fondasi awal perjalanan akademik dan pembentukan karakter disiplin. disini saya sudah mulai mengerti, pentingnya akademik, saya juga selalu menjadi peraih juara kelas.' }
+            };
+            const item = details[key];
+            Swal.fire({
+                title: `<span style="color:var(--accent)">${item.t}</span>`,
+                text: item.d,
+                icon: 'info',
+                confirmButtonColor: '#3b82f6'
+            });
+        }
+
+        function showAwardDetail(key) {
+            const awards = {
+                choir: { t: 'Paduan Suara', d: 'Memenangkan Juara 1 tingkat Provinsi Kalimantan Selatan tahun 2023 yang diselenggarakan oleh Perpustaakaan Daerah Banjarmasin Kalimantan Selatan.' },
+                video: { t: 'Video Edukasi', d: 'Juara 2 FKIP Land 2025 dengan karya video kreatif, yang dimana videonya tentang pembelajaran secara digital melalui video interaktif.' },
+                music: { t: 'Musik Daerah', d: 'Juara 3 tingkat Provinsi Kalimantan Selatan tahun 2023 dengan aransemen musik tradisional panting dari kebudayaan banjar.' },
+                satgas: { t: 'Satgas PPK', d: 'Juara 3 Video Edukasi dari Satgas PPK ULM yang bertema pencegahan kekerasan di lingkungan kampus.' },
+                silat: { t: 'Pencak Silat', d: 'Juara 3 kelas tanding kategori anak di tingkat Kabupaten Hulu Sungai Utara pada tahun 2019.' }
+            };
+            const item = awards[key];
+            Swal.fire({
+                title: item.t,
+                text: item.d,
+                imageUrl: 'https://images.unsplash.com/photo-1578574515313-ad198a9c0d3b?w=400',
+                imageWidth: 400,
+                imageAlt: 'Trophy',
+                confirmButtonColor: '#fbbf24'
+            });
+        }
+
+        // Navbar Scroll Effect
+        window.onscroll = function () {
+            const nav = document.getElementById('main-nav');
+            if (window.pageYOffset > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        };
+
+        // Startup Animation
+        window.addEventListener('load', () => {
+            gsap.to("#home", { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "expo.out" });
+        });
+
+        function openSocial(platform) {
+
+            const links = {
+                instagram: "https://www.instagram.com/riimskuari._?igsh=cjNkbXB2eWh3Zzlk",
+                github: "https://github.com/maskuari",
+                linkedin: "https://id.linkedin.com/in/maskuari-undefined-3714b6322",
+                youtube: "https://youtube.com/@maskuari137?si=ZDTtOENVhMH5KAYe",
+                tiktok: "https://www.tiktok.com/@maskuari._?_r=1&_t=ZS-94fw6eugTWm",
+                whatsapp: "#"
+            };
+
+            window.open(links[platform], "_blank");
+        }
+
+    </script>
+</body>
+
+</html>

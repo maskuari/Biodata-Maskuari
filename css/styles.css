@@ -1319,6 +1319,46 @@ p {
 
 @media (max-width: 1180px) {
     body {
+        background: #f8fbff;
+    }
+
+    :root[data-theme="dark"] body {
+        background: #050814;
+    }
+
+    body::before,
+    .ambient {
+        display: none;
+    }
+
+    .hero-card,
+    .portrait-panel,
+    .profile-card,
+    .info-card,
+    .timeline-card,
+    .algoplay-card,
+    .project-card,
+    .skill-bar,
+    .achievement-grid article,
+    .contact-card,
+    .social-board,
+    .mobile-nav,
+    .credit-bar,
+    .modal-card,
+    .terminal-card,
+    .mini-chip,
+    .porto-toggle,
+    .mini-project-card {
+        backdrop-filter: none;
+    }
+
+    .page.active {
+        opacity: 1;
+        transform: none;
+        animation: none;
+    }
+
+    body {
         overflow: auto;
     }
 
@@ -1375,6 +1415,12 @@ p {
 }
 
 @media (max-width: 720px) {
+    *,
+    *::before,
+    *::after {
+        transition-duration: 180ms !important;
+    }
+
     .brand > span:last-child {
         display: none;
     }

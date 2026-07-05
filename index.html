@@ -4,1230 +4,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Maskuari Portofolio</title>
+    <meta name="description"
+        content="Portfolio Maskuari, mahasiswa Pendidikan Komputer, frontend developer, designer, dan kreator aplikasi AlgoPlay.">
+    <title>Maskuari | Portfolio</title>
 
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
 
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-    <style>
-        /* ========================================
-           ULTRA REFINED DESIGN SYSTEM
-           ========================================
-        */
-        :root {
-            --primary: #0f172a;
-            --accent: #3b82f6;
-            --accent-glow: rgba(59, 130, 246, 0.4);
-            --bg-body: #f8fafc;
-            --white: #ffffff;
-            --glass: rgba(255, 255, 255, 0.85);
-            --border: #e2e8f0;
-            --text-main: #1e293b;
-            --text-mute: #64748b;
-            --shadow-soft: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
-            --shadow-hard: 0 20px 40px -15px rgba(0, 0, 0, 0.1);
-            --transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            scroll-behavior: smooth;
-        }
-
-        body {
-            background-color: var(--bg-body);
-            color: var(--text-main);
-            overflow-x: hidden;
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        /* --- BACKGROUND UNIVERSE (EXTRA DETAILED) --- */
-        .universe-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            background: radial-gradient(circle at 50% 50%, #ffffff 0%, #f1f5f9 100%);
-        }
-
-        .universe-bg::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
-            opacity: 0.03;
-        }
-
-        .floating-icon {
-            position: absolute;
-            color: var(--accent);
-            opacity: 0.12;
-            filter: blur(0.4px);
-            will-change: transform;
-            transition: opacity 0.5s ease;
-        }
-
-        @keyframes floatAnim {
-            0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-            }
-
-            33% {
-                transform: translate(30px, -50px) rotate(10deg) scale(1.1);
-            }
-
-            66% {
-                transform: translate(-20px, 20px) rotate(-10deg) scale(0.9);
-            }
-
-            100% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-            }
-        }
-
-        /* --- NAVIGATION --- */
-        nav {
-            position: fixed;
-            top: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 1200px;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 12px 30px;
-            border-radius: 100px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
-            border: 1px solid var(--white);
-            box-shadow: var(--shadow-hard);
-            transition: var(--transition);
-        }
-
-        nav.scrolled {
-            top: 15px;
-            width: 95%;
-            padding: 8px 25px;
-        }
-
-        .logo {
-            font-weight: 800;
-            font-size: 1.8rem;
-            color: var(--primary);
-            cursor: pointer;
-            letter-spacing: -1.5px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .logo span {
-            color: var(--accent);
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 8px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            padding: 12px 20px;
-            text-decoration: none;
-            color: var(--text-mute);
-            font-size: 0.9rem;
-            font-weight: 700;
-            border-radius: 50px;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-
-        .nav-links a:hover {
-            color: var(--accent);
-            background: rgba(59, 130, 246, 0.08);
-            border-color: rgba(59, 130, 246, 0.1);
-        }
-
-        .nav-links a.active {
-            background: var(--white);
-            color: var(--accent);
-            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.1);
-            border-color: var(--border);
-        }
-
-        /* --- MAIN LAYOUT --- */
-        main {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 200px 20px 100px;
-            position: relative;
-        }
-
-        .page {
-            display: none;
-            opacity: 0;
-            transform: translateY(40px) scale(0.98);
-        }
-
-        .page.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        /* --- SECTION HEADERS --- */
-        .section-header {
-            margin-bottom: 80px;
-            text-align: left;
-            position: relative;
-        }
-
-        .section-header h2 {
-            font-size: 5rem;
-            font-weight: 900;
-            color: var(--primary);
-            letter-spacing: -4px;
-            line-height: 0.85;
-            text-transform: uppercase;
-        }
-
-        .section-header .sub-line {
-            width: 120px;
-            height: 10px;
-            background: linear-gradient(90deg, var(--accent), transparent);
-            margin-top: 30px;
-            border-radius: 10px;
-        }
-
-        /* --- CARDS & BLOCKS --- */
-        .content-card {
-            background: var(--white);
-            padding: 60px;
-            border-radius: 50px;
-            border: 1px solid var(--border);
-            box-shadow: var(--shadow-hard);
-            margin-bottom: 40px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .content-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 6px;
-            background: var(--accent);
-            opacity: 0.8;
-        }
-
-        /* --- HERO SECTION --- */
-        .hero {
-            display: flex;
-            gap: 100px;
-            align-items: center;
-            min-height: 70vh;
-        }
-
-        .hero-text {
-            flex: 1.4;
-        }
-
-        .hero-text h4 {
-            color: var(--accent);
-            font-weight: 800;
-            letter-spacing: 5px;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            font-size: 1rem;
-        }
-
-        .hero-text h1 {
-            font-size: 6rem;
-            line-height: 0.95;
-            font-weight: 900;
-            color: var(--primary);
-            margin-bottom: 40px;
-            letter-spacing: -3px;
-        }
-
-        .hero-text p {
-            font-size: 1.3rem;
-            color: var(--text-mute);
-            line-height: 1.8;
-            margin-bottom: 50px;
-            max-width: 650px;
-        }
-
-        .hero-img-box {
-            flex: 0.8;
-            position: relative;
-            perspective: 1000px;
-        }
-
-        .hero-img-box img {
-            width: 100%;
-            border-radius: 60px;
-            height: 600px;
-            object-fit: cover;
-            transform: rotateY(-10deg) rotateX(5deg);
-            box-shadow:
-                -20px 20px 50px rgba(0, 0, 0, 0.1),
-                40px 40px 0px var(--white),
-                41px 41px 0px var(--border);
-            transition: var(--transition);
-        }
-
-        .hero-img-box:hover img {
-            transform: rotateY(0deg) rotateX(0deg);
-        }
-
-        /* --- BIODATA GRID --- */
-        .bio-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-        }
-
-        .bio-info-card {
-            background: #f8fafc;
-            padding: 45px;
-            border-radius: 40px;
-            border: 2px solid transparent;
-            transition: var(--transition);
-        }
-
-        .bio-info-card:hover {
-            background: var(--white);
-            border-color: var(--accent);
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-soft);
-        }
-
-        .bio-item {
-            margin-bottom: 30px;
-        }
-
-        .bio-item:last-child {
-            margin-bottom: 0;
-        }
-
-        .bio-label {
-            display: block;
-            font-size: 0.85rem;
-            font-weight: 800;
-            color: var(--accent);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            letter-spacing: 1px;
-        }
-
-        .bio-value {
-            font-size: 1.35rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        /* --- TIMELINE (PENDIDIKAN & PENGALAMAN) --- */
-        .timeline-container {
-            position: relative;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-left: 60px;
-            margin-bottom: 60px;
-            border-left: 4px solid var(--border);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .timeline-item:hover {
-            border-left-color: var(--accent);
-        }
-
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            left: -14px;
-            top: 0;
-            width: 24px;
-            height: 24px;
-            background: var(--white);
-            border: 5px solid var(--accent);
-            border-radius: 50%;
-            transition: var(--transition);
-        }
-
-        .timeline-item:hover::before {
-            background: var(--accent);
-            transform: scale(1.3);
-        }
-
-        .timeline-item h3 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-
-        .timeline-item .date {
-            color: var(--accent);
-            font-weight: 800;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            display: inline-block;
-            background: rgba(59, 130, 246, 0.1);
-            padding: 5px 15px;
-            border-radius: 10px;
-        }
-
-        .timeline-item p {
-            color: var(--text-mute);
-            font-size: 1.15rem;
-            line-height: 1.8;
-        }
-
-        /* --- SKILLS --- */
-        .skill-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 30px;
-        }
-
-        .skill-card {
-            background: #f8fafc;
-            padding: 35px;
-            border-radius: 30px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-        }
-
-        .skill-card:hover {
-            background: var(--white);
-            transform: translateY(-10px);
-            box-shadow: var(--shadow-soft);
-            border-color: var(--accent);
-        }
-
-        .skill-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            font-weight: 800;
-            font-size: 1.1rem;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 16px;
-            background: #e2e8f0;
-            border-radius: 50px;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--accent), #60a5fa);
-            width: 0;
-            transition: 2s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-
-        /* --- PRESTASI --- */
-        .award-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 25px;
-        }
-
-        .award-card {
-            display: flex;
-            align-items: center;
-            gap: 30px;
-            padding: 40px;
-            background: var(--white);
-            border-radius: 40px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .award-card:hover {
-            transform: translateY(-15px) scale(1.02);
-            border-color: #fbbf24;
-            box-shadow: 0 30px 60px -20px rgba(251, 191, 36, 0.2);
-        }
-
-        .award-icon {
-            width: 80px;
-            height: 80px;
-            background: #fffbeb;
-            color: #fbbf24;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 25px;
-            flex-shrink: 0;
-        }
-
-        .award-icon i {
-            width: 40px;
-            height: 40px;
-        }
-
-        .award-card h3 {
-            font-size: 1.4rem;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .award-card .date {
-            font-weight: 700;
-            color: var(--text-mute);
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            text-align: center;
-            padding: 50px;
-            color: var(--text-mute);
-            font-weight: 600;
-        }
-
-        /* --- RESPONSIVE --- */
-        @media (max-width: 1024px) {
-            .hero {
-                flex-direction: column-reverse;
-                text-align: center;
-                gap: 50px;
-            }
-
-            .hero-text h1 {
-                font-size: 4.5rem;
-            }
-
-            .hero-text p {
-                margin: 0 auto 40px;
-            }
-
-            .hero-img-box img {
-                height: 450px;
-                width: 450px;
-                border-radius: 40px;
-                transform: none !important;
-            }
-
-            .section-header h2 {
-                font-size: 3.5rem;
-            }
-        }
-
-        /* ========================================
-   MOBILE RESPONSIVE FIX (CLEAN VERSION)
-   ======================================== */
-
-        @media (max-width:768px) {
-
-            /* ===============================
-NAVBAR MOBILE
-=============================== */
-
-            nav {
-                top: auto;
-                bottom: 18px;
-                width: 94%;
-                padding: 8px;
-                border-radius: 28px;
-            }
-
-            nav.scrolled {
-                top: auto;
-                bottom: 20px;
-            }
-
-            .logo {
-                display: none;
-            }
-
-            .nav-links {
-                width: 100%;
-                justify-content: space-around;
-            }
-
-            .nav-links a {
-                padding: 10px;
-                font-size: 0.85rem;
-            }
-
-            .nav-links a span {
-                display: none;
-            }
-
-
-            /* ===============================
-MAIN SPACING
-=============================== */
-
-            main {
-                padding: 30px 18px calc(160px + env(safe-area-inset-bottom));
-            }
-
-            .content-card {
-                padding: 22px;
-                border-radius: 26px;
-            }
-
-
-            /* ===============================
-SECTION HEADER (BIAR GA GEDE)
-=============================== */
-
-            .section-header h2 {
-                font-size: 2.1rem;
-                letter-spacing: -1px;
-                line-height: 1.15;
-            }
-
-            .sub-line {
-                width: 65px;
-                height: 5px;
-                margin-top: 16px;
-            }
-
-
-            /* ===============================
-HERO SECTION
-=============================== */
-
-            .hero-text {
-                text-align: center;
-            }
-
-            .hero-text h4 {
-                font-size: 0.8rem;
-                letter-spacing: 3px;
-            }
-
-            .hero-text p {
-                font-size: 0.95rem;
-            }
-
-            .hero-img-box img {
-                width: 220px;
-                height: 220px;
-            }
-
-
-            /* ===============================
-BIODATA GRID
-=============================== */
-
-            .bio-grid {
-                grid-template-columns: 1fr;
-                gap: 18px;
-            }
-
-            .bio-label {
-                font-size: 0.7rem;
-            }
-
-            .bio-value {
-                font-size: 0.95rem;
-                line-height: 1.6;
-            }
-
-
-            /* ===============================
-TIMELINE (PENDIDIKAN)
-=============================== */
-
-            .timeline-item {
-                padding-left: 40px;
-            }
-
-            .timeline-item h3 {
-                font-size: 1.2rem;
-            }
-
-            .timeline-item p {
-                font-size: 0.9rem;
-            }
-
-            .date {
-                font-size: 0.75rem;
-                padding: 4px 10px;
-            }
-
-
-            /* ===============================
-SKILL SECTION
-=============================== */
-
-            .skill-info {
-                font-size: 0.9rem;
-            }
-
-            .progress-bar {
-                height: 12px;
-            }
-
-
-            /* ===============================
-AWARD GRID
-=============================== */
-
-            .award-grid {
-                grid-template-columns: 1fr;
-                gap: 18px;
-            }
-
-        }
-
-        @media (max-width: 480px) {
-            .hero-text h1 {
-                font-size: 2rem;
-            }
-
-            .cta-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .btn {
-                width: 100%;
-                justify-content: center;
-            }
-        }
-    </style>
+    <script src="https://unpkg.com/lucide@latest" defer></script>
+    <script src="js/main.js" defer></script>
 </head>
 
 <body>
+    <div class="ambient" aria-hidden="true">
+        <span class="mesh mesh-a"></span>
+        <span class="mesh mesh-b"></span>
+        <span class="orbit orbit-a"></span>
+        <span class="orbit orbit-b"></span>
+        <i class="float-icon icon-a" data-lucide="code-2"></i>
+        <i class="float-icon icon-b" data-lucide="rocket"></i>
+        <i class="float-icon icon-c" data-lucide="square-terminal"></i>
+        <i class="float-icon icon-d" data-lucide="binary"></i>
+        <i class="float-icon icon-e" data-lucide="bot"></i>
+        <i class="float-icon icon-f" data-lucide="cpu"></i>
+    </div>
 
-    <div class="universe-bg" id="bg-elements"></div>
+    <header class="topbar">
+        <button class="brand" type="button" data-page-target="home" aria-label="Buka halaman home">
+            <span class="brand-logo">
+                <img class="logo-light" src="assets/brand/logo-light.png" alt="">
+                <img class="logo-dark" src="assets/brand/logo-dark.png" alt="">
+            </span>
+            <span>Maskuari<span>.</span></span>
+        </button>
 
-    <nav id="main-nav">
-        <div class="logo" onclick="navigateTo('home')">
-            <i data-lucide="layout" style="color:var(--accent)"></i>
-            MASKUARI<span>.</span>
-        </div>
-        <ul class="nav-links">
-            <li><a onclick="navigateTo('home')" id="nav-home" class="active"><i
-                        data-lucide="home"></i><span>Home</span></a></li>
-            <li><a onclick="navigateTo('biodata')" id="nav-biodata"><i data-lucide="user"></i><span>Bio</span></a></li>
-            <li><a onclick="navigateTo('pendidikan')" id="nav-pendidikan"><i
-                        data-lucide="graduation-cap"></i><span>Edu</span></a></li>
-            <li><a onclick="navigateTo('pengalaman')" id="nav-pengalaman"><i
-                        data-lucide="briefcase"></i><span>Exp</span></a></li>
-            <li><a onclick="navigateTo('skill')" id="nav-skill"><i data-lucide="zap"></i><span>Skill</span></a></li>
-            <li><a onclick="navigateTo('prestasi')" id="nav-prestasi"><i data-lucide="award"></i><span>Reward</span></a>
-            </li>
-            <li><a onclick="navigateTo('sosial')" id="nav-sosial"><i data-lucide="share-2"></i><span>Social</span></a>
-            </li>
-        </ul>
-    </nav>
+        <nav class="nav-pills" aria-label="Navigasi utama">
+            <button class="nav-pill active" type="button" data-page-target="home"><i data-lucide="home"></i>Home</button>
+            <button class="nav-pill" type="button" data-page-target="bio"><i data-lucide="user-round"></i>Bio</button>
+            <button class="nav-pill" type="button" data-page-target="education"><i data-lucide="graduation-cap"></i>Pendidikan</button>
+            <button class="nav-pill" type="button" data-page-target="projects"><i data-lucide="folder-kanban"></i>Project</button>
+            <button class="nav-pill" type="button" data-page-target="experience"><i data-lucide="briefcase-business"></i>Pengalaman</button>
+            <button class="nav-pill" type="button" data-page-target="skills"><i data-lucide="zap"></i>Skill</button>
+            <button class="nav-pill" type="button" data-page-target="achievements"><i data-lucide="award"></i>Prestasi</button>
+            <button class="nav-pill" type="button" data-page-target="contact"><i data-lucide="send"></i>Contact</button>
+        </nav>
 
-    <main>
-        <section id="home" class="page active">
-            <div class="hero">
-                <div class="hero-text">
-                    <h4>Student of Computer Education</h4>
-                    <h1>Hi, I'm <br><span style="color: var(--accent);">Maskuari</span></h1>
-                    <p>Membangun pengalaman digital yang elegan, fungsional, dan memberikan dampak nyata bagi pengguna
-                        melalui kode dan desain yang presisi. Berfokus pada perpaduan kreativitas dan teknologi.</p>
-                    <div style="display: flex; gap: 20px; justify-content: inherit;">
-                        <button onclick="navigateTo('pengalaman')"
-                            style="padding: 22px 45px; background: var(--primary); color: white; cursor: pointer; font-weight: 800; border: none; border-radius: 25px; font-size: 1.1rem; box-shadow: 0 15px 30px rgba(15, 23, 42, 0.2); transition: 0.3s;">Explore
-                            Projects</button>
-                        <button onclick="navigateTo('biodata')"
-                            style="padding: 22px 45px; background: var(--white); color: var(--primary); cursor: pointer; font-weight: 800; border: 2px solid var(--border); border-radius: 25px; font-size: 1.1rem; transition: 0.3s;">Read
-                            Bio</button>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Ganti mode gelap">
+            <span class="theme-thumb">
+                <i class="theme-sun" data-lucide="sun"></i>
+                <i class="theme-moon" data-lucide="moon"></i>
+            </span>
+        </button>
+    </header>
+
+    <main class="page-stage">
+        <section class="page active" id="home" data-page="home">
+            <div class="home-grid">
+                <div class="hero-card">
+                    <p class="eyebrow"><span></span> Student of Computer Education</p>
+                    <h1>Hi, I'm <strong>Maskuari</strong></h1>
+                    <p>
+                        Mahasiswa Pendidikan Komputer yang suka membangun web, desain visual,
+                        dokumentasi, dan aplikasi pembelajaran digital yang terasa modern, rapi,
+                        dan tetap punya energi.
+                    </p>
+                    <div class="actions">
+                        <button class="btn primary" type="button" data-page-target="projects">
+                            <i data-lucide="sparkles"></i>
+                            Lihat Project
+                        </button>
+                        <button class="btn secondary" type="button" data-page-target="education">
+                            <i data-lucide="graduation-cap"></i>
+                            Pendidikan
+                        </button>
                     </div>
                 </div>
-                <div class="hero-img-box">
-                    <img src="/Maskuari.jpeg" alt="Maskuari Portrait">
+
+                <div class="portrait-panel">
+                    <img src="assets/maskuari.jpeg" alt="Foto profil Maskuari">
+                    <div class="terminal-card">
+                        <div class="terminal-dots"><span></span><span></span><span></span></div>
+                        <code>maskuari.dev --frontend --creative</code>
+                    </div>
+                    <div class="mini-chip chip-location"><i data-lucide="map-pin"></i>Banjarmasin</div>
+                    <div class="mini-chip chip-role"><i data-lucide="wand-sparkles"></i>Creative Tech</div>
                 </div>
             </div>
         </section>
 
-        <section id="biodata" class="page">
-            <div class="section-header">
-                <h2>Biodata Diri</h2>
-                <div class="sub-line"></div>
-            </div>
-            <div class="content-card">
-                <div class="bio-grid">
-                    <div class="bio-info-card">
-                        <div class="bio-item"><span class="bio-label">Nama Lengkap</span><span
-                                class="bio-value">Maskuari</span></div>
-                        <div class="bio-item"><span class="bio-label">Email Korespondensi</span><span
-                                class="bio-value">arimaskuari@gmail.com</span></div>
-                        <div class="bio-item"><span class="bio-label">Pekerjaan Utama</span><span
-                                class="bio-value">Canva Design, Front End Developer, Mahasiswa</span></div>
-                    </div>
-                    <div class="bio-info-card">
-                        <div class="bio-item"><span class="bio-label">Domisili Saat Ini</span><span
-                                class="bio-value">Banjarmasin, Kalimantan Selatan</span></div>
-                        <div class="bio-item"><span class="bio-label">Daerah Kelahiran</span><span
-                                class="bio-value">Amuntai, Hulu Sungai Utara</span></div>
-                        <div class="bio-item"><span class="bio-label">Status Kolaborasi</span><span
-                                class="bio-value">Available for Creative Projects</span></div>
+        <section class="page" id="bio" data-page="bio">
+            <div class="page-shell">
+                <div class="page-head">
+                    <p class="eyebrow"><span></span> Biodata</p>
+                    <h2>Biodata Diri</h2>
+                </div>
+
+                <div class="bio-layout">
+                    <article class="profile-card">
+                        <img src="assets/profile/maskuari-3x4.png" alt="Foto 3x4 Maskuari">
+                        <div>
+                            <h3>Maskuari</h3>
+                            <p>Frontend Developer, Canva Designer, dan mahasiswa Pendidikan Komputer.</p>
+                        </div>
+                    </article>
+
+                    <div class="info-grid">
+                        <article class="info-card"><i data-lucide="mail"></i><span>Email</span><strong>maskuari346@gmail.com</strong></article>
+                        <article class="info-card"><i data-lucide="briefcase-business"></i><span>Fokus</span><strong>Frontend Developer, Canva Design, Mahasiswa</strong></article>
+                        <article class="info-card"><i data-lucide="map"></i><span>Domisili</span><strong>Banjarmasin, Kalimantan Selatan</strong></article>
+                        <article class="info-card"><i data-lucide="home"></i><span>Daerah Kelahiran</span><strong>Amuntai, Hulu Sungai Utara</strong></article>
+                        <article class="info-card"><i data-lucide="handshake"></i><span>Kolaborasi</span><strong>Available for creative projects</strong></article>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="pendidikan" class="page">
-            <div class="section-header">
-                <h2>Pendidikan</h2>
-                <div class="sub-line"></div>
-            </div>
-            <div class="content-card">
-                <div class="timeline-container">
-                    <div class="timeline-item" onclick="showEduDetail('ulm')">
-                        <span class="date">2024 - Sekarang</span>
+        <section class="page" id="education" data-page="education">
+            <div class="page-shell">
+                <div class="page-head">
+                    <p class="eyebrow"><span></span> Pendidikan</p>
+                    <h2>Pendidikan</h2>
+                </div>
+
+                <div class="education-grid">
+                    <article class="timeline-card" data-modal-title="Universitas Lambung Mangkurat"
+                        data-modal-body="Masuk tahun 2024 pada Program Studi Pendidikan Komputer. Di sini saya belajar pemrograman, web, algoritma, teknologi pendidikan, dan dasar pengembangan media pembelajaran digital.">
+                        <span>2024 - Sekarang</span>
                         <h3>Universitas Lambung Mangkurat</h3>
-                        <p>Program Studi Pendidikan Komputer. Fokus pada pengembangan teknologi pendidikan, dasar-dasar
-                            algoritma, dan rekayasa perangkat lunak dalam konteks pembelajaran digital.</p>
-                    </div>
-                    <div class="timeline-item" onclick="showEduDetail('smk')">
-                        <span class="date">2021 - 2024</span>
+                        <p>Program Studi Pendidikan Komputer. Fokus pada teknologi pendidikan, algoritma, web, dan pengembangan perangkat lunak pembelajaran.</p>
+                    </article>
+                    <article class="timeline-card" data-modal-title="SMK Negeri 1 Amuntai"
+                        data-modal-body="Jurusan Teknik Komputer dan Jaringan. Mempelajari jaringan komputer, perakitan perangkat keras, instalasi sistem operasi, administrasi server, dan praktik teknis komputer.">
+                        <span>2021 - 2024</span>
                         <h3>SMK Negeri 1 Amuntai</h3>
-                        <p>Jurusan Teknik Komputer dan Jaringan. Mempelajari manajemen infrastruktur jaringan, perakitan
-                            perangkat keras, instalasi sistem operasi, dan administrasi server.</p>
-                    </div>
-                    <div class="timeline-item" onclick="showEduDetail('smp')">
-                        <span class="date">2018 - 2021</span>
+                        <p>Jurusan Teknik Komputer dan Jaringan. Belajar jaringan, hardware, instalasi sistem operasi, administrasi server, dan praktik teknis komputer.</p>
+                    </article>
+                    <article class="timeline-card" data-modal-title="SMP Negeri 9 Amuntai"
+                        data-modal-body="Mulai aktif dalam kegiatan sekolah dan organisasi. Di masa ini minat pada seni, teknologi, dan kegiatan kepemimpinan mulai terbentuk.">
+                        <span>2018 - 2021</span>
                         <h3>SMP Negeri 9 Amuntai</h3>
-                        <p>Mulai aktif dalam berbagai organisasi kesiswaan dan mulai mengeksplorasi minat di bidang seni
-                            musik dan teknologi informasi dasar.</p>
-                    </div>
-                    <div class="timeline-item" onclick="showEduDetail('sd')">
-                        <span class="date">2012 - 2018</span>
+                        <p>Mulai aktif berorganisasi, mengeksplorasi minat seni, teknologi informasi dasar, dan kegiatan sekolah.</p>
+                    </article>
+                    <article class="timeline-card" data-modal-title="SDN Pinangkara"
+                        data-modal-body="Pendidikan dasar yang menjadi fondasi awal kedisiplinan belajar, karakter akademik, dan kebiasaan aktif di lingkungan sekolah.">
+                        <span>2012 - 2018</span>
                         <h3>SDN Pinangkara</h3>
-                        <p>Pendidikan dasar yang menjadi fondasi awal perjalanan akademik dan pembentukan karakter
-                            disiplin.</p>
-                    </div>
+                        <p>Fondasi pendidikan dasar, disiplin belajar, dan pembentukan karakter akademik sejak awal.</p>
+                    </article>
                 </div>
             </div>
         </section>
 
-        <section id="pengalaman" class="page">
-            <div class="section-header">
-                <h2>Pengalaman</h2>
-                <div class="sub-line"></div>
+        <section class="page" id="projects" data-page="projects">
+            <div class="page-shell">
+                <div class="page-head">
+                    <p class="eyebrow"><span></span> Project Showcase</p>
+                    <h2>Project</h2>
+                </div>
+
+                <div class="project-grid">
+                    <article class="project-card web-feature">
+                        <img src="assets/projects/triowash.png" alt="Preview Triowash">
+                        <div>
+                            <span>Web Demo Pemesanan Laundry</span>
+                            <h3>Triowash</h3>
+                            <p>Website layanan laundry dengan visual hero, CTA, dan tampilan pemesanan.</p>
+                            <a href="https://triowash.infinityfreeapp.com/" target="_blank" rel="noopener">Buka Project <i data-lucide="arrow-up-right"></i></a>
+                        </div>
+                    </article>
+                    <article class="project-card">
+                        <img src="assets/projects/bgify.png" alt="Preview Bgify">
+                        <div>
+                            <span>Hapus Background Foto</span>
+                            <h3>Bgify</h3>
+                            <p>Tool AI untuk upload foto dan hapus background secara cepat.</p>
+                            <a href="https://maskuari-bgify.hf.space/" target="_blank" rel="noopener">Buka Project <i data-lucide="arrow-up-right"></i></a>
+                        </div>
+                    </article>
+                    <article class="project-card">
+                        <img src="assets/projects/groupify.png" alt="Preview Groupify">
+                        <div>
+                            <span>Pembuat Kelompok</span>
+                            <h3>Groupify</h3>
+                            <p>Generator kelompok otomatis, random, dan rata untuk daftar peserta.</p>
+                            <a href="https://groupifly.netlify.app/" target="_blank" rel="noopener">Buka Project <i data-lucide="arrow-up-right"></i></a>
+                        </div>
+                    </article>
+                </div>
+
+                <article class="algoplay-card">
+                    <div class="algoplay-copy">
+                        <span class="project-label">Android App</span>
+                        <h3>AlgoPlay</h3>
+                        <p>
+                            Aplikasi belajar algoritma dengan materi, latihan, quiz, leaderboard,
+                            profil, detail materi, dan tampilan pembelajaran yang ceria.
+                        </p>
+                    </div>
+                    <div class="device-gallery" aria-label="Video dan screenshot AlgoPlay">
+                        <video src="assets/videos/algoplay-demo-1.mp4" controls muted playsinline preload="metadata"></video>
+                        <video src="assets/videos/algoplay-demo-2.mp4" controls muted playsinline preload="metadata"></video>
+                        <img src="assets/algoplay/algoplay-splash.jpeg" alt="Splash screen AlgoPlay">
+                        <img src="assets/algoplay/algoplay-home.jpeg" alt="Home AlgoPlay">
+                        <img src="assets/algoplay/algoplay-materi.jpeg" alt="Materi AlgoPlay">
+                        <img src="assets/algoplay/algoplay-latihan.jpeg" alt="Latihan AlgoPlay">
+                        <img src="assets/algoplay/algoplay-leaderboard.jpeg" alt="Leaderboard AlgoPlay">
+                        <img src="assets/algoplay/algoplay-profile.jpeg" alt="Profil AlgoPlay">
+                        <img src="assets/algoplay/algoplay-detail.jpeg" alt="Detail materi AlgoPlay">
+                        <img src="assets/algoplay/algoplay-quiz.jpeg" alt="Quiz AlgoPlay">
+                    </div>
+                </article>
             </div>
-            <div class="content-card">
-                <div class="timeline-container">
-                    <div class="timeline-item">
-                        <span class="date">2026 - Sekarang</span>
-                        <h3>Anggota Divisi Komunikasi dan Informasi HIMPIKOM FKIP ULM</h3>
-                        <p>Bertanggung jawab dalam pengelolaan media sosial resmi organisasi, strategi publikasi konten,
-                            dan arus informasi bagi seluruh anggota HIMPIKOM periode 2026.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="date">2026</span>
-                        <h3>Anggota PDD Bukber Bersama HIMPIKOM</h3>
-                        <p>Terlibat dalam tim Publikasi, Dekorasi, dan Dokumentasi untuk mensukseskan acara silaturahmi
-                            tahunan mahasiswa Pendidikan Komputer.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="date">2026</span>
-                        <h3>Anggota PDD Pemira HIMPIKOM</h3>
-                        <p>Mendesain aset visual dan mendokumentasikan jalannya Pemilihan Raya Ketua Umum HIMPIKOM
-                            secara profesional.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="date">2025</span>
-                        <h3>CO PDD Musta HIMPIKOM</h3>
-                        <p>Koordinator lapangan untuk tim Publikasi, Dekorasi, dan Dokumentasi dalam forum Musyawarah
-                            Anggota tertinggi di organisasi.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="date">2025</span>
-                        <h3>OC Koordinator Lapangan Pilkom Festival</h3>
-                        <p>Mengatur teknis operasional di lapangan untuk memastikan kelancaran seluruh rangkaian acara
-                            Pilkom Festival yang melibatkan banyak peserta.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="date">2025</span>
-                        <h3>Anggota Sekretariatan STEM Puebloscience</h3>
-                        <p>Menangani administrasi, pendataan peserta, dan teknis dokumentasi pada acara internasional
-                            kolaborasi FKIP ULM dengan Puebloscience.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="date">2024 - Sekarang</span>
-                        <h3>Ketua Angkatan 2024 Prodi Pendidikan Komputer</h3>
-                        <p>Dipercaya memimpin, mengayomi, dan mengkoordinir seluruh mahasiswa angkatan 2024 dalam urusan
-                            akademik maupun kegiatan internal prodi.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="date">2023</span>
-                        <h3>Magang di Kantor PUPR bidang SDA</h3>
-                        <p>Melaksanakan praktik kerja industri (Prakerin) di Dinas Pekerjaan Umum dan Penataan Ruang
-                            pada bidang Sumber Daya Air, mempelajari sistem administrasi dan pemetaan data.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="date">2022 - 2023</span>
-                        <h3>Magang di Yulida Komputer</h3>
-                        <p>Mengasah keterampilan teknis dalam perbaikan PC/Laptop, instalasi software, manajemen stok
-                            komponen, serta pelayanan langsung kepada pelanggan.</p>
-                    </div>
-                    <div class="timeline-item">
-                        <span class="date">2019 - 2020</span>
-                        <h3>Ketua OSIS SMP Negeri 9 Amuntai</h3>
-                        <p>Memimpin organisasi kesiswaan tertinggi di tingkat sekolah, merancang program kerja, dan
-                            berkoordinasi langsung dengan pihak sekolah untuk kegiatan siswa.</p>
-                    </div>
+        </section>
+
+        <section class="page" id="experience" data-page="experience">
+            <div class="page-shell">
+                <div class="page-head">
+                    <p class="eyebrow"><span></span> Pengalaman</p>
+                    <h2>Pengalaman</h2>
+                </div>
+
+                <div class="experience-grid">
+                    <article class="timeline-card"><span>2026</span><h3>Anggota Acara PLC (Pilkom Leader Camp)</h3><p>Terlibat dalam pelaksanaan kegiatan kepemimpinan mahasiswa Pendidikan Komputer.</p></article>
+                    <article class="timeline-card"><span>2026 - Sekarang</span><h3>Anggota Divisi Komunikasi dan Informasi HIMPIKOM FKIP ULM</h3><p>Mengelola publikasi, media sosial, dan arus informasi organisasi.</p></article>
+                    <article class="timeline-card"><span>2026</span><h3>Anggota PDD Bukber Bersama HIMPIKOM</h3><p>Publikasi, dekorasi, dan dokumentasi acara silaturahmi tahunan mahasiswa Pendidikan Komputer.</p></article>
+                    <article class="timeline-card"><span>2026</span><h3>Anggota PDD Pemira HIMPIKOM</h3><p>Mendesain aset visual dan mendokumentasikan rangkaian Pemilihan Raya HIMPIKOM.</p></article>
+                    <article class="timeline-card"><span>2025</span><h3>CO PDD Musta HIMPIKOM</h3><p>Koordinator publikasi, dekorasi, dan dokumentasi forum musyawarah anggota.</p></article>
+                    <article class="timeline-card"><span>2025</span><h3>OC Koordinator Lapangan Pilkom Festival</h3><p>Mengatur teknis lapangan agar rangkaian acara berjalan tertib dan lancar.</p></article>
+                    <article class="timeline-card"><span>2025</span><h3>Anggota Sekretariatan STEM Puebloscience</h3><p>Menangani administrasi, pendataan peserta, dan dokumentasi kegiatan kolaborasi.</p></article>
+                    <article class="timeline-card"><span>2024 - Sekarang</span><h3>Ketua Angkatan 2024 Prodi Pendidikan Komputer</h3><p>Mengkoordinir kebutuhan akademik dan kegiatan internal angkatan.</p></article>
+                    <article class="timeline-card"><span>2023</span><h3>Magang di Kantor PUPR bidang SDA</h3><p>Administrasi, pengolahan data, dan alur kerja bidang Sumber Daya Air.</p></article>
+                    <article class="timeline-card"><span>2022 - 2023</span><h3>Magang di Yulida Komputer</h3><p>Perbaikan PC/laptop, instalasi software, stok komponen, dan pelayanan pelanggan.</p></article>
+                    <article class="timeline-card"><span>2019 - 2020</span><h3>Ketua OSIS SMP Negeri 9 Amuntai</h3><p>Memimpin organisasi kesiswaan, merancang program kerja, dan berkoordinasi dengan sekolah.</p></article>
                 </div>
             </div>
         </section>
 
-        <section id="skill" class="page">
-            <div class="section-header">
-                <h2>Keahlian</h2>
-                <div class="sub-line"></div>
-            </div>
-            <div class="content-card">
-                <div class="skill-container">
-                    <div class="skill-card">
-                        <div class="skill-info"><span>Canva Design</span><span>96%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="96%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>Video Editing</span><span>92%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="92%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>Photography</span><span>88%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="88%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>Mobile Editing (Pixellab, Lightroom)</span><span>90%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="90%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>HTML Development</span><span>80%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="80%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>CSS Styling</span><span>70%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="70%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>JavaScript Logic</span><span>68%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="68%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>Python Programming</span><span>70%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="70%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>Adobe Photoshop</span><span>72%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="72%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>PHP Backend</span><span>40%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="40%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>UI/UX Figma</span><span>60%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="60%"></div>
-                        </div>
-                    </div>
-                    <div class="skill-card">
-                        <div class="skill-info"><span>Java & Octave</span><span>30%</span></div>
-                        <div class="progress-bar">
-                            <div class="progress-fill" data-percent="30%"></div>
-                        </div>
-                    </div>
+        <section class="page" id="skills" data-page="skills">
+            <div class="page-shell">
+                <div class="page-head">
+                    <p class="eyebrow"><span></span> Skill</p>
+                    <h2>Keahlian</h2>
+                </div>
+
+                <div class="skill-grid">
+                    <article class="skill-bar" data-skill="96"><div><span>Canva Design</span><strong>96%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="92"><div><span>Video Editing</span><strong>92%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="88"><div><span>Photography</span><strong>88%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="90"><div><span>Mobile Editing</span><strong>90%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="80"><div><span>HTML Development</span><strong>80%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="70"><div><span>CSS Styling</span><strong>70%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="68"><div><span>JavaScript Logic</span><strong>68%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="70"><div><span>Python Programming</span><strong>70%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="72"><div><span>Adobe Photoshop</span><strong>72%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="40"><div><span>PHP Backend</span><strong>40%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="60"><div><span>UI/UX Figma</span><strong>60%</strong></div><b></b></article>
+                    <article class="skill-bar" data-skill="30"><div><span>Java & Octave</span><strong>30%</strong></div><b></b></article>
                 </div>
             </div>
         </section>
 
-        <section id="prestasi" class="page">
-            <div class="section-header">
-                <h2>Pencapaian</h2>
-                <div class="sub-line"></div>
-            </div>
-            <div class="award-grid">
-                <div class="award-card" onclick="showAwardDetail('choir')">
-                    <div class="award-icon"><i data-lucide="music"></i></div>
-                    <div>
-                        <h3>Juara 1 Paduan Suara</h3>
-                        <p class="date">Provinsi Kalsel 2023</p>
-                    </div>
+        <section class="page" id="achievements" data-page="achievements">
+            <div class="page-shell">
+                <div class="page-head">
+                    <p class="eyebrow"><span></span> Prestasi</p>
+                    <h2>Prestasi</h2>
                 </div>
-                <div class="award-card" onclick="showAwardDetail('video')">
-                    <div class="award-icon"><i data-lucide="video"></i></div>
-                    <div>
-                        <h3>Juara 2 Video Edukasi</h3>
-                        <p class="date">FKIP Land 2025</p>
-                    </div>
-                </div>
-                <div class="award-card" onclick="showAwardDetail('music')">
-                    <div class="award-icon"><i data-lucide="radio"></i></div>
-                    <div>
-                        <h3>Juara 3 Musik Daerah</h3>
-                        <p class="date">Provinsi Kalsel 2023</p>
-                    </div>
-                </div>
-                <div class="award-card" onclick="showAwardDetail('satgas')">
-                    <div class="award-icon"><i data-lucide="shield-check"></i></div>
-                    <div>
-                        <h3>Juara 3 Video Edukasi</h3>
-                        <p class="date">Satgas PPK ULM</p>
-                    </div>
-                </div>
-                <div class="award-card" onclick="showAwardDetail('silat')">
-                    <div class="award-icon"><i data-lucide="sword"></i></div>
-                    <div>
-                        <h3>Juara 3 Silat</h3>
-                        <p class="date">Kabupaten HSU 2019</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="sosial" class="page">
-            <div class="section-header">
-                <h2>Sosial Media</h2>
-                <div class="sub-line"></div>
-            </div>
 
-            <div class="content-card">
-                <div class="skill-container">
-
-                    <div class="skill-card" onclick="openSocial('instagram')">
-                        <div class="skill-info">
-                            <span><i data-lucide="instagram"></i> Instagram</span>
-                        </div>
-                        <p style="color:var(--text-mute)">Ikuti aktivitas dan karya saya di Instagram.</p>
-                    </div>
-
-                    <div class="skill-card" onclick="openSocial('github')">
-                        <div class="skill-info">
-                            <span><i data-lucide="github"></i> Github</span>
-                        </div>
-                        <p style="color:var(--text-mute)">Lihat proyek coding dan repository saya.</p>
-                    </div>
-
-                    <div class="skill-card" onclick="openSocial('linkedin')">
-                        <div class="skill-info">
-                            <span><i data-lucide="linkedin"></i> LinkedIn</span>
-                        </div>
-                        <p style="color:var(--text-mute)">Profil profesional dan pengalaman kerja saya.</p>
-                    </div>
-
-                    <div class="skill-card" onclick="openSocial('youtube')">
-                        <div class="skill-info">
-                            <span><i data-lucide="youtube"></i> YouTube</span>
-                        </div>
-                        <p style="color:var(--text-mute)">Konten video dan dokumentasi kegiatan.</p>
-                    </div>
-
-                    <div class="skill-card" onclick="openSocial('tiktok')">
-                        <div class="skill-info">
-                            <span><i data-lucide="music-4"></i> TikTok</span>
-                        </div>
-                        <p style="color:var(--text-mute)">Konten video pendek dan aktivitas kreatif.</p>
-                    </div>
-
-                    <div class="skill-card" onclick="openSocial('whatsapp')">
-                        <div class="skill-info">
-                            <span><i data-lucide="message-circle"></i> WhatsApp</span>
-                        </div>
-                        <p style="color:var(--text-mute)">Hubungi saya langsung melalui WhatsApp.</p>
-                    </div>
-
+                <div class="achievement-grid">
+                    <article data-modal-title="Juara 1 Paduan Suara"
+                        data-modal-body="Juara 1 tingkat Provinsi Kalimantan Selatan tahun 2023 pada lomba paduan suara."><i data-lucide="music"></i><strong>Juara 1 Paduan Suara</strong><span>Provinsi Kalsel 2023</span></article>
+                    <article data-modal-title="Juara 2 Video Edukasi"
+                        data-modal-body="Juara 2 FKIP Land 2025 melalui karya video edukasi kreatif bertema pembelajaran digital."><i data-lucide="video"></i><strong>Juara 2 Video Edukasi</strong><span>FKIP Land 2025</span></article>
+                    <article data-modal-title="Juara 3 Musik Daerah"
+                        data-modal-body="Juara 3 tingkat Provinsi Kalimantan Selatan tahun 2023 melalui aransemen musik daerah."><i data-lucide="radio"></i><strong>Juara 3 Musik Daerah</strong><span>Provinsi Kalsel 2023</span></article>
+                    <article data-modal-title="Juara 3 Video Edukasi"
+                        data-modal-body="Juara 3 Video Edukasi dari Satgas PPK ULM dengan tema pencegahan kekerasan di lingkungan kampus."><i data-lucide="shield-check"></i><strong>Juara 3 Video Edukasi</strong><span>Satgas PPK ULM</span></article>
+                    <article data-modal-title="Juara 3 Silat"
+                        data-modal-body="Juara 3 pencak silat tingkat Kabupaten Hulu Sungai Utara tahun 2019."><i data-lucide="badge-medal"></i><strong>Juara 3 Silat</strong><span>Kabupaten HSU 2019</span></article>
                 </div>
             </div>
         </section>
 
+        <section class="page" id="contact" data-page="contact">
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <p class="eyebrow"><span></span> Contact</p>
+                    <h2>Sosial Media & Kontak</h2>
+                    <p>Kirim email atau cek sosial media dan repository project.</p>
+                    <div class="actions">
+                        <a class="btn primary" href="mailto:maskuari346@gmail.com"><i data-lucide="mail"></i>maskuari346@gmail.com</a>
+                        <button class="btn secondary" type="button" data-copy-email="maskuari346@gmail.com"><i data-lucide="copy"></i>Salin Email</button>
+                    </div>
+                </div>
+                <div class="social-board">
+                    <a href="https://www.instagram.com/riimskuari._?igsh=cjNkbXB2eWh3Zzlk" target="_blank" rel="noopener"><img src="assets/social/instagram.png" alt="">Instagram</a>
+                    <a href="https://github.com/maskuari" target="_blank" rel="noopener"><img src="assets/social/github.png" alt="">GitHub</a>
+                    <a href="https://id.linkedin.com/in/maskuari-undefined-3714b6322" target="_blank" rel="noopener"><img src="assets/social/linkedin.png" alt="">LinkedIn</a>
+                    <a href="https://youtube.com/@maskuari137?si=ZDTtOENVhMH5KAYe" target="_blank" rel="noopener"><img src="assets/social/youtube.png" alt="">YouTube</a>
+                    <a href="https://www.tiktok.com/@maskuari._?_r=1&_t=ZS-94fw6eugTWm" target="_blank" rel="noopener"><img src="assets/social/tiktok.png" alt="">TikTok</a>
+                    <a href="https://wa.me/6285705848927" target="_blank" rel="noopener"><img src="assets/social/whatsapp.png" alt="">WhatsApp</a>
+                </div>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <p>&copy; 2025 Maskuari. All rights reserved.</p>
+    <nav class="mobile-nav" aria-label="Navigasi mobile">
+        <button class="active" type="button" data-page-target="home"><i data-lucide="home"></i><span>Home</span></button>
+        <button type="button" data-page-target="bio"><i data-lucide="user-round"></i><span>Bio</span></button>
+        <button type="button" data-page-target="education"><i data-lucide="graduation-cap"></i><span>Edu</span></button>
+        <button type="button" data-page-target="projects"><i data-lucide="folder-kanban"></i><span>Project</span></button>
+        <button type="button" data-page-target="experience"><i data-lucide="briefcase"></i><span>Exp</span></button>
+        <button type="button" data-page-target="skills"><i data-lucide="zap"></i><span>Skill</span></button>
+        <button type="button" data-page-target="achievements"><i data-lucide="award"></i><span>Prestasi</span></button>
+        <button type="button" data-page-target="contact"><i data-lucide="send"></i><span>Contact</span></button>
+    </nav>
+
+    <button class="theme-toggle theme-toggle-mobile" type="button" data-theme-toggle aria-label="Ganti mode gelap">
+        <span class="theme-thumb">
+            <i class="theme-sun" data-lucide="sun"></i>
+            <i class="theme-moon" data-lucide="moon"></i>
+        </span>
+    </button>
+
+    <footer class="credit-bar">
+        <span>Credit: Maskuari</span>
+        <span>Portfolio Interactive 2026</span>
     </footer>
 
-    <script>
-        lucide.createIcons();
-
-        // --- ENHANCED BACKGROUND GENERATOR ---
-        const bgContainer = document.getElementById('bg-elements');
-        const iconList = ['bot', 'ghost', 'cpu', 'rocket', 'gamepad-2', 'code-2', 'monitor', 'zap', 'star', 'binary', 'database', 'command', 'terminal'];
-
-        function generateBackground() {
-            bgContainer.innerHTML = '';
-            for (let i = 0; i < 14; i++) { // Lebih banyak elemen (50 buah)
-                const iconWrap = document.createElement('div');
-                iconWrap.className = 'floating-icon';
-                const size = 30 + Math.random() * 100; // Ukuran bervariasi dari 30px sampai 130px
-
-                iconWrap.style.left = Math.random() * 100 + '%';
-                iconWrap.style.top = Math.random() * 100 + '%';
-                iconWrap.style.animation = `floatAnim ${10 + Math.random() * 20}s infinite ease-in-out`;
-                iconWrap.style.animationDelay = `${Math.random() * 10}s`;
-
-                const iconName = iconList[Math.floor(Math.random() * iconList.length)];
-                iconWrap.innerHTML = `<i data-lucide="${iconName}" style="width:${size}px; height:${size}px"></i>`;
-                bgContainer.appendChild(iconWrap);
-            }
-            lucide.createIcons();
-        }
-        generateBackground();
-
-        // --- NAVIGATION ENGINE ---
-        function navigateTo(pageId) {
-            const current = document.querySelector('.page.active');
-            const target = document.getElementById(pageId);
-            const navLinks = document.querySelectorAll('.nav-links a');
-
-            if (!target || current.id === pageId) return;
-
-            // Transisi keluar
-            gsap.to(current, {
-                opacity: 0,
-                y: -30,
-                duration: 0.4,
-                ease: "power2.in",
-                onComplete: () => {
-                    current.classList.remove('active');
-                    target.classList.add('active');
-
-                    // Transisi masuk
-                    gsap.fromTo(target,
-                        { opacity: 0, y: 30, scale: 0.95 },
-                        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "power2.out" }
-                    );
-
-                    // Skill bar animation trigger
-                    if (pageId === 'skill') {
-                        setTimeout(() => {
-                            document.querySelectorAll('.progress-fill').forEach(bar => {
-                                bar.style.width = bar.getAttribute('data-percent');
-                            });
-                        }, 200);
-                    }
-                }
-            });
-
-            // Update UI Nav
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.id === `nav-${pageId}`) link.classList.add('active');
-            });
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        // --- MODAL POPUPS (DETAIL) ---
-        function showEduDetail(key) {
-            const details = {
-                ulm: { t: 'ULM Banjarmasin', d: 'Masuk pada 2024, lulus pada jalur SNBT, Disini saya belajar banyak pemrograman, dari Pyhton, java, PHP, dan Web, dan karenabasisnya pendidikan, jadi saya juga belajar tentang pendidikan, kognitif, dll (menjadi guru).' },
-                smk: { t: 'SMKN 1 Amuntai', d: 'Jurusan Teknik Komputer dan Jaringan. Saya Mempelajari manajemen infrastruktur jaringan, perakitan perangkat keras, instalasi sistem operasi, dan administrasi server. Syukurnya, pada SMK ini saya bisa meraih juara 1 dikelas setiap semester' },
-                smp: { t: 'SMPN 9 Amuntai', d: 'Mulai aktif dalam berbagai organisasi kesiswaan dan mulai mengeksplorasi minat di bidang seni musik dan teknologi informasi dasar. selama bersekolah, saya berhasil mempertahankan akademik dengan menjadi juara 1 kelas berturut-turut, dan jadi lulusan terbaik pada angkatannya' },
-                sd: { t: 'SDN Pinangkara', d: 'Pendidikan dasar yang menjadi fondasi awal perjalanan akademik dan pembentukan karakter disiplin. disini saya sudah mulai mengerti, pentingnya akademik, saya juga selalu menjadi peraih juara kelas.' }
-            };
-            const item = details[key];
-            Swal.fire({
-                title: `<span style="color:var(--accent)">${item.t}</span>`,
-                text: item.d,
-                icon: 'info',
-                confirmButtonColor: '#3b82f6'
-            });
-        }
-
-        function showAwardDetail(key) {
-            const awards = {
-                choir: { t: 'Paduan Suara', d: 'Memenangkan Juara 1 tingkat Provinsi Kalimantan Selatan tahun 2023 yang diselenggarakan oleh Perpustaakaan Daerah Banjarmasin Kalimantan Selatan.' },
-                video: { t: 'Video Edukasi', d: 'Juara 2 FKIP Land 2025 dengan karya video kreatif, yang dimana videonya tentang pembelajaran secara digital melalui video interaktif.' },
-                music: { t: 'Musik Daerah', d: 'Juara 3 tingkat Provinsi Kalimantan Selatan tahun 2023 dengan aransemen musik tradisional panting dari kebudayaan banjar.' },
-                satgas: { t: 'Satgas PPK', d: 'Juara 3 Video Edukasi dari Satgas PPK ULM yang bertema pencegahan kekerasan di lingkungan kampus.' },
-                silat: { t: 'Pencak Silat', d: 'Juara 3 kelas tanding kategori anak di tingkat Kabupaten Hulu Sungai Utara pada tahun 2019.' }
-            };
-            const item = awards[key];
-            Swal.fire({
-                title: item.t,
-                text: item.d,
-                imageUrl: 'https://images.unsplash.com/photo-1578574515313-ad198a9c0d3b?w=400',
-                imageWidth: 400,
-                imageAlt: 'Trophy',
-                confirmButtonColor: '#fbbf24'
-            });
-        }
-
-        // Navbar Scroll Effect
-        window.onscroll = function () {
-            const nav = document.getElementById('main-nav');
-            if (window.pageYOffset > 50) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        };
-
-        // Startup Animation
-        window.addEventListener('load', () => {
-            gsap.to("#home", { opacity: 1, y: 0, scale: 1, duration: 1.2, ease: "expo.out" });
-        });
-
-        function openSocial(platform) {
-
-            const links = {
-                instagram: "https://www.instagram.com/riimskuari._?igsh=cjNkbXB2eWh3Zzlk",
-                github: "https://github.com/maskuari",
-                linkedin: "https://id.linkedin.com/in/maskuari-undefined-3714b6322",
-                youtube: "https://youtube.com/@maskuari137?si=ZDTtOENVhMH5KAYe",
-                tiktok: "https://www.tiktok.com/@maskuari._?_r=1&_t=ZS-94fw6eugTWm",
-                whatsapp: "#"
-            };
-
-            window.open(links[platform], "_blank");
-        }
-
-    </script>
+    <div class="modal-backdrop" data-modal hidden>
+        <article class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button class="modal-close" type="button" data-modal-close aria-label="Tutup popup">
+                <i data-lucide="x"></i>
+            </button>
+            <p class="eyebrow"><span></span> Detail</p>
+            <h2 id="modal-title" data-modal-title></h2>
+            <p data-modal-body></p>
+        </article>
+    </div>
 </body>
 
 </html>

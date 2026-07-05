@@ -9,6 +9,8 @@ const modalBody = document.querySelector(".modal-card [data-modal-body]");
 const modalClose = document.querySelector("[data-modal-close]");
 const portraitPanel = document.querySelector(".portrait-panel");
 const themeButtons = document.querySelectorAll("[data-theme-toggle]");
+const portfolioToggle = document.querySelector("[data-portfolio-toggle]");
+const portfolioPanel = document.querySelector("[data-portfolio-panel]");
 
 function refreshIcons() {
     if (window.lucide) {
@@ -147,6 +149,13 @@ themeButtons.forEach((button) => {
         saveTheme(nextTheme);
     });
 });
+
+if (portfolioToggle && portfolioPanel) {
+    portfolioToggle.addEventListener("click", () => {
+        const isOpen = portfolioPanel.classList.toggle("is-open");
+        portfolioToggle.setAttribute("aria-expanded", String(isOpen));
+    });
+}
 
 document.querySelectorAll("[data-modal-title][data-modal-body]").forEach((card) => {
     card.addEventListener("click", () => {

@@ -11,6 +11,11 @@ const portraitPanel = document.querySelector(".portrait-panel");
 const themeButtons = document.querySelectorAll("[data-theme-toggle]");
 const portfolioToggle = document.querySelector("[data-portfolio-toggle]");
 const portfolioPanel = document.querySelector("[data-portfolio-panel]");
+const mobileMenu = document.querySelector("[data-mobile-menu]");
+const mobileMenuBackdrop = document.querySelector("[data-mobile-menu-backdrop]");
+const mobileMenuToggle = document.querySelector("[data-menu-toggle]");
+const mobileMenuClose = document.querySelector("[data-menu-close]");
+const secondaryPages = new Set(["bio", "education", "skills", "achievements"]);
 
 function refreshIcons() {
     if (window.lucide) {
@@ -53,6 +58,28 @@ function setActiveButtons(pageName) {
     pageButtons.forEach((button) => {
         button.classList.toggle("active", button.dataset.pageTarget === pageName);
     });
+    mobileMenuToggle?.classList.toggle("active", secondaryPages.has(pageName));
+}
+
+function closeMobileMenu() {
+    if (!mobileMenu || !mobileMenuBackdrop || !mobileMenuToggle) return;
+    mobileMenu.hidden = true;
+    mobileMenuBackdrop.hidden = true;
+    mobileMenuToggle.setAttribute("aria-expanded", "false");
+    document.body.classList.remove("menu-open");
+}
+
+function toggleMobileMenu() {
+    if (!mobileMenu || !mobileMenuBackdrop || !mobileMenuToggle) return;
+    if (!mobileMenu.hidden) {
+        closeMobileMenu();
+        return;
+    }
+    mobileMenu.hidden = false;
+    mobileMenuBackdrop.hidden = false;
+    mobileMenuToggle.setAttribute("aria-expanded", "true");
+    document.body.classList.add("menu-open");
+    mobileMenu.querySelector("button[data-page-target]")?.focus();
 }
 
 function pauseVideos() {
@@ -74,7 +101,9 @@ function resetSkills() {
 
 function showPage(pageName) {
     const target = document.querySelector(`.page[data-page="${pageName}"]`);
-    if (!target || target.classList.contains("active")) return;
+    if (!target) return;
+    closeMobileMenu();
+    if (target.classList.contains("active")) return;
 
     pauseVideos();
     pages.forEach((page) => page.classList.remove("active"));
@@ -128,6 +157,14 @@ pageButtons.forEach((button) => {
     button.addEventListener("click", () => showPage(button.dataset.pageTarget));
 });
 
+mobileMenuToggle?.addEventListener("click", toggleMobileMenu);
+mobileMenuClose?.addEventListener("click", () => {
+    closeMobileMenu();
+    mobileMenuToggle?.focus();
+});
+mobileMenuBackdrop?.addEventListener("click", closeMobileMenu);
+window.matchMedia("(min-width: 1181px)").addEventListener("change", closeMobileMenu);
+
 if (copyEmailButton) {
     copyEmailButton.addEventListener("click", copyEmail);
 }
@@ -177,6 +214,11 @@ if (modal) {
 
 document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+        if (mobileMenu && !mobileMenu.hidden) {
+            closeMobileMenu();
+            mobileMenuToggle?.focus();
+            return;
+        }
         closeModal();
         return;
     }
@@ -200,7 +242,7 @@ document.addEventListener("keydown", (event) => {
 
 window.addEventListener("load", () => {
     refreshIcons();
-    setActiveButtons("home");
+    setActiveButtons(document.querySelector(".page.active")?.dataset.page || "home");
 });
 
 refreshIcons();

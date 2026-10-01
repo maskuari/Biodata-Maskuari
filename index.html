@@ -61,26 +61,38 @@
         </button>
     </header>
 
+    <header class="mobile-header">
+        <button class="mobile-brand" type="button" data-page-target="home" aria-label="Buka halaman Home">
+            <span class="mobile-brand-mark">M.</span><span>Maskuari<span class="brand-dot">.</span></span>
+        </button>
+        <button class="theme-toggle theme-toggle-mobile" type="button" data-theme-toggle aria-label="Ganti mode gelap">
+            <span class="theme-thumb"><i class="theme-sun" data-lucide="sun"></i><i class="theme-moon" data-lucide="moon"></i></span>
+        </button>
+    </header>
+
     <main class="page-stage">
         <section class="page active" id="home" data-page="home">
             <div class="home-grid">
                 <div class="hero-card">
-                    <p class="eyebrow"><span></span> Student of Computer Education</p>
-                    <h1>Hi, I'm <strong>Maskuari</strong></h1>
+                    <p class="eyebrow"><span></span> Mahasiswa Pendidikan Komputer · Kreator Digital</p>
+                    <h1>Halo, saya <strong>Maskuari.</strong></h1>
                     <p>
                         Mahasiswa Pendidikan Komputer yang suka membangun web, desain visual,
-                        dokumentasi, dan aplikasi pembelajaran digital yang terasa modern, rapi,
-                        dan tetap punya energi.
+                        dokumentasi, dan aplikasi pembelajaran digital yang mudah digunakan
+                        dan punya karakter.
                     </p>
                     <div class="actions">
                         <button class="btn primary" type="button" data-page-target="projects">
                             <i data-lucide="sparkles"></i>
                             Lihat Project
                         </button>
-                        <button class="btn secondary" type="button" data-page-target="education">
-                            <i data-lucide="graduation-cap"></i>
-                            Pendidikan
+                        <button class="btn secondary" type="button" data-page-target="contact">
+                            <i data-lucide="arrow-up-right"></i>
+                            Hubungi Saya
                         </button>
+                    </div>
+                    <div class="hero-tags" aria-label="Bidang yang ditekuni">
+                        <span>Frontend</span><span>Desain visual</span><span>Dokumentasi</span>
                     </div>
                 </div>
 
@@ -167,6 +179,19 @@
                 </div>
 
                 <div class="project-grid">
+                    <article class="project-card uangku-card">
+                        <div class="uangku-preview" role="img" aria-label="Ilustrasi antarmuka Uangku dengan kartu saldo dan grafik keuangan">
+                            <div class="uangku-preview-brand"><span class="uangku-mark">u.</span> uangku<span>.</span></div>
+                            <div class="uangku-preview-panel"><small>Saldo yang tertata</small><strong>Rp 12.850.000</strong><span class="uangku-bars"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span></div>
+                            <span class="uangku-preview-chip">&#8599; Pemasukan tercatat</span>
+                        </div>
+                        <div>
+                            <span>Web Manajemen Keuangan</span>
+                            <h3>Uangku</h3>
+                            <p>Tempat untuk mencatat, memantau, dan merencanakan keuangan pribadi dengan tampilan yang sederhana.</p>
+                            <a href="https://uangkuuu.infinityfreeapp.com/dashboard" target="_blank" rel="noopener noreferrer">Buka Project <i data-lucide="arrow-up-right"></i></a>
+                        </div>
+                    </article>
                     <article class="project-card web-feature">
                         <img src="assets/optimized/triowash.webp" alt="Preview Triowash" loading="lazy" decoding="async">
                         <div>
@@ -274,6 +299,10 @@
                 </div>
 
                 <div class="experience-grid">
+                    <article class="timeline-card"><span>2026</span><h3>PDD PKKMB Pendidikan Komputer 2026</h3><p>Terlibat dalam publikasi, desain, dan dokumentasi kegiatan pengenalan mahasiswa baru.</p></article>
+                    <article class="timeline-card"><span>2026</span><h3>PDD Diesnatalis X Pilkomfestival 2026</h3><p>Mendukung kebutuhan visual dan dokumentasi rangkaian acara.</p></article>
+                    <article class="timeline-card"><span>2026</span><h3>PDD Tausiyah Islam Pendidikan Komputer</h3><p>Menyiapkan materi publikasi dan dokumentasi kegiatan.</p></article>
+                    <article class="timeline-card"><span>2026</span><h3>PDD Upgrading Himpikom</h3><p>Membantu publikasi dan dokumentasi kegiatan internal organisasi.</p></article>
                     <article class="timeline-card"><span>2026</span><h3>Anggota Acara PLC (Pilkom Leader Camp)</h3><p>Terlibat dalam pelaksanaan kegiatan kepemimpinan mahasiswa Pendidikan Komputer.</p></article>
                     <article class="timeline-card"><span>2026 - Sekarang</span><h3>Anggota Divisi Komunikasi dan Informasi HIMPIKOM FKIP ULM</h3><p>Mengelola publikasi, media sosial, dan arus informasi organisasi.</p></article>
                     <article class="timeline-card"><span>2026</span><h3>Anggota PDD Bukber Bersama HIMPIKOM</h3><p>Publikasi, dekorasi, dan dokumentasi acara silaturahmi tahunan mahasiswa Pendidikan Komputer.</p></article>
@@ -358,23 +387,21 @@
         </section>
     </main>
 
-    <nav class="mobile-nav" aria-label="Navigasi mobile">
-        <button class="active" type="button" data-page-target="home"><i data-lucide="home"></i><span>Home</span></button>
-        <button type="button" data-page-target="bio"><i data-lucide="user-round"></i><span>Bio</span></button>
-        <button type="button" data-page-target="education"><i data-lucide="graduation-cap"></i><span>Edu</span></button>
-        <button type="button" data-page-target="projects"><i data-lucide="folder-kanban"></i><span>Project</span></button>
-        <button type="button" data-page-target="experience"><i data-lucide="briefcase"></i><span>Exp</span></button>
-        <button type="button" data-page-target="skills"><i data-lucide="zap"></i><span>Skill</span></button>
-        <button type="button" data-page-target="achievements"><i data-lucide="award"></i><span>Prestasi</span></button>
-        <button type="button" data-page-target="contact"><i data-lucide="send"></i><span>Contact</span></button>
+    <div class="mobile-menu-backdrop" data-mobile-menu-backdrop hidden></div>
+    <nav class="mobile-menu" id="mobile-menu" aria-label="Navigasi lainnya" data-mobile-menu hidden>
+        <div class="mobile-menu-head"><strong>Jelajahi</strong><button type="button" data-menu-close aria-label="Tutup menu"><i data-lucide="x"></i></button></div>
+        <button type="button" data-page-target="bio"><i data-lucide="user-round"></i><span>Biodata</span><i data-lucide="arrow-up-right"></i></button>
+        <button type="button" data-page-target="education"><i data-lucide="graduation-cap"></i><span>Pendidikan</span><i data-lucide="arrow-up-right"></i></button>
+        <button type="button" data-page-target="skills"><i data-lucide="zap"></i><span>Keahlian</span><i data-lucide="arrow-up-right"></i></button>
+        <button type="button" data-page-target="achievements"><i data-lucide="award"></i><span>Prestasi</span><i data-lucide="arrow-up-right"></i></button>
     </nav>
-
-    <button class="theme-toggle theme-toggle-mobile" type="button" data-theme-toggle aria-label="Ganti mode gelap">
-        <span class="theme-thumb">
-            <i class="theme-sun" data-lucide="sun"></i>
-            <i class="theme-moon" data-lucide="moon"></i>
-        </span>
-    </button>
+    <nav class="mobile-nav" aria-label="Navigasi utama mobile">
+        <button class="active" type="button" data-page-target="home"><i data-lucide="house"></i><span>Home</span></button>
+        <button type="button" data-page-target="projects"><i data-lucide="grid-2x2"></i><span>Project</span></button>
+        <button type="button" data-page-target="experience"><i data-lucide="briefcase-business"></i><span>Pengalaman</span></button>
+        <button type="button" data-page-target="contact"><i data-lucide="message-circle"></i><span>Kontak</span></button>
+        <button type="button" data-menu-toggle aria-controls="mobile-menu" aria-expanded="false"><i data-lucide="menu"></i><span>Menu</span></button>
+    </nav>
 
     <footer class="credit-bar">
         <span>Credit: Maskuari</span>

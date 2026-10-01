@@ -109,7 +109,11 @@ function showPage(pageName) {
     pages.forEach((page) => page.classList.remove("active"));
     target.classList.add("active");
     target.scrollTop = 0;
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    if (window.matchMedia("(max-width: 1180px)").matches) {
+        window.scrollTo(0, 0);
+    } else {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     setActiveButtons(pageName);
 
     if (pageName === "skills") {
@@ -126,7 +130,6 @@ function openModal(title, body) {
     modalBody.textContent = body;
     modal.hidden = false;
     document.body.classList.add("modal-open");
-    refreshIcons();
 }
 
 function closeModal() {
@@ -169,7 +172,7 @@ if (copyEmailButton) {
     copyEmailButton.addEventListener("click", copyEmail);
 }
 
-if (portraitPanel) {
+if (portraitPanel && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
     ["pointerenter", "focusin"].forEach((eventName) => {
         portraitPanel.addEventListener(eventName, () => portraitPanel.classList.add("is-hovered"));
     });
@@ -240,9 +243,5 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-window.addEventListener("load", () => {
-    refreshIcons();
-    setActiveButtons(document.querySelector(".page.active")?.dataset.page || "home");
-});
-
 refreshIcons();
+setActiveButtons(document.querySelector(".page.active")?.dataset.page || "home");
